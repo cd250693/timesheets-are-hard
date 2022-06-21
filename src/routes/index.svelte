@@ -31,6 +31,10 @@
 <code><JsonView json={$timeEntries} /></code>
 
 <style>
+    /* global styling */
+    :global(html) {
+        min-height: 100%;
+    }
     :global(body) {
         color: #222;
         background: #fff;
@@ -40,8 +44,17 @@
 
     @media (prefers-color-scheme: dark) {
         :global(body) {
-            color: #d1d1d1;
-            background: #1d3040;
+            background-image: linear-gradient(
+                0deg,
+                hsl(202deg 100% 14%) 0%,
+                hsl(198deg 100% 17%) 20%,
+                hsl(193deg 100% 19%) 40%,
+                hsl(189deg 100% 21%) 59%,
+                hsl(183deg 100% 22%) 79%,
+                hsl(177deg 100% 24%) 100%
+            );
+            background-attachment: fixed;
+            color: #d7d7d7;
         }
     }
 </style>
