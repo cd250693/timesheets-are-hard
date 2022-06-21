@@ -1,6 +1,27 @@
-# create-svelte
+# Timesheets are Hard
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Developing
+
+Install the right version of node through nvm:
+
+```bash
+nvm use
+```
+
+The install dependencies
+
+```bash
+npm install
+```
+
+And finally, run the dev server
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
 ## Creating a project
 
@@ -12,17 +33,6 @@ npm init svelte
 
 # create a new project in my-app
 npm init svelte my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
 ## Building
@@ -40,6 +50,7 @@ You can preview the production build with `npm run preview`.
 
 ## TODOs
 
-- Properly load and save data (indexed per day)
-- allow switching days
-- order by startDate
+- [X] Properly load and save data (indexed per day)
+- [X] allow switching days
+- [ ] order by startDate
+- [ ] implement a redo and undo function
