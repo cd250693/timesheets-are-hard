@@ -1,6 +1,5 @@
 <script lang="ts">
-    // @ts-ignore
-    import { JsonView } from '@zerodevx/svelte-json-view';
+    import StateDebug from '../components/StateDebug.svelte';
     import DateInput from '../components/DateInput.svelte';
     import Entry from '../components/Entry.svelte';
     import { currentDate, timeEntries } from '../stores';
@@ -13,7 +12,6 @@
         const randomMinute = (Math.round(Math.random() * 4) * 15).toString().padStart(2, '0');
         timeEntries.addEntry('Test', `${randomHour}:${randomMinute}`);
     }
-
 </script>
 
 <h1>Timesheeting is hard...</h1>
@@ -28,7 +26,7 @@
     {/each}
 </section>
 
-<code><JsonView json={$timeEntries} /></code>
+<StateDebug data={$timeEntries} />
 
 <style>
     /* global styling */
