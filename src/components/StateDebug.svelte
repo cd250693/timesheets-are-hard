@@ -20,7 +20,6 @@
         if (!expanding) return;
 
         if (expanding) {
-            console.log('expanding up', event);
             let delta = start - event.pageY;
             height = initial + delta;
         }
@@ -28,7 +27,6 @@
 
     function startExpand(event: MouseEvent) {
         expanding = true;
-        console.log(event);
         start = event.pageY;
         initial = height;
     }
