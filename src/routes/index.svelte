@@ -29,6 +29,12 @@
 <StateDebug data={$timeEntries} />
 
 <style>
+    :global(div.container) {
+        display: flex;
+        width: fit-content;
+        margin: auto;
+        flex-direction: column;
+    }
     /* global styling */
     :global(html) {
         min-height: 100%;

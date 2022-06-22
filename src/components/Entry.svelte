@@ -58,7 +58,7 @@
         justify-content: space-between;
     }
     div.row:hover {
-            background: #263f54;
+            background: rgba(0, 0, 0, 0.25);
     }
     form {
         display: inline-flex;
