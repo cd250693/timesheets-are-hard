@@ -8,7 +8,7 @@
     export let data: any;
 
     // functionality to allow expanding/contracting the code
-    let expanding: string | null = null;
+    let expanding = false;
     let start: number;
     let initial: number;
 
@@ -19,31 +19,29 @@
     function expand(event: MouseEvent) {
         if (!expanding) return;
 
-        if (expanding === 'up') {
+        if (expanding) {
             console.log('expanding up', event);
             let delta = start - event.pageY;
             height = initial + delta;
-        } else if (expanding === 'down') {
-            // pass
         }
     }
 
-    function startExpand(type: typeof expanding, event: MouseEvent) {
-        expanding = type;
+    function startExpand(event: MouseEvent) {
+        expanding = true;
         console.log(event);
         start = event.pageY;
         initial = height;
     }
 
     function stopExpand() {
-        expanding = null;
+        expanding = false;
     }
 </script>
 
 <svelte:window on:mouseup={stopExpand} on:mousemove={expand} />
 
 <div class="debug-code" style="height: {height}px">
-    <div class="resize-handle" on:mousedown={startExpand.bind(this, 'up')} on:dblclick={resetHeight}/>
+    <div class="resize-handle" on:mousedown={startExpand} on:dblclick={resetHeight}/>
     <code><JsonView json={data} /></code>
 </div>
 
@@ -58,16 +56,20 @@
     }
 
     code {
-        padding: 10px;
         overflow: auto;
+        /* set css variables */
+        --nodeColor: #d7d7d7;
     }
 
     .resize-handle {
-        background-color: rgb(245, 255, 192);
-        min-height: 5px;
+        background: #00000054;
+        min-height: 20px;
         cursor: ns-resize;
         position: fixed;
         min-width: 100%;
-        margin-top: -5px;
+        margin-top: -20px;
+    }
+    .resize-handle:hover {
+        background: #a1a1a154;
     }
 </style>
