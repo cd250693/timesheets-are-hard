@@ -4,43 +4,57 @@
     // default height to set at
     export let height = 150;
     const initalHeight = height;
+    // keep track of the height of the window
+    let windowHeight: number;
+    // tracking or the
+    let codeHeight: number;
+    const codePadding = 10;
     // data to show
     export let data: any;
 
     // functionality to allow expanding/contracting the code
-    let expanding = false;
+    let resizing = false;
     let start: number;
     let initial: number;
 
-    function resetHeight() {
-        height = initalHeight;
-    }
-
-    function expand(event: MouseEvent) {
-        if (!expanding) return;
-
-        if (expanding) {
-            let delta = start - event.pageY;
-            height = initial + delta;
+    function autoResize() {
+        let maxHeight = windowHeight - 50;
+        if (height === codeHeight + codePadding || height === maxHeight) {
+            // already showing all the code or at max height, instead revert to initialHeight
+            height = initalHeight;
+        } else {
+            // show the full code (or try to), with a padding to ensure the bottom isn't cut off
+            let newHeight = Math.max(initalHeight, codeHeight + codePadding);
+            height = Math.min(newHeight, windowHeight - 50);
         }
     }
 
-    function startExpand(event: MouseEvent) {
-        expanding = true;
+    function resize(event: MouseEvent) {
+        if (!resizing) return;
+
+        if (resizing) {
+            let maxHeight = windowHeight - 50;
+            let delta = start - event.pageY;
+            height = Math.min(initial + delta, maxHeight);
+        }
+    }
+
+    function startResize(event: MouseEvent) {
+        resizing = true;
         start = event.pageY;
         initial = height;
     }
 
-    function stopExpand() {
-        expanding = false;
+    function stopResize() {
+        resizing = false;
     }
 </script>
 
-<svelte:window on:mouseup={stopExpand} on:mousemove={expand} />
+<svelte:window on:mouseup={stopResize} on:mousemove={resize} bind:innerHeight={windowHeight}/>
 
 <div class="debug-code" style="height: {height}px">
-    <div class="resize-handle" on:mousedown={startExpand} on:dblclick={resetHeight}/>
-    <code><JsonView json={data} /></code>
+    <div class="resize-handle" on:mousedown={startResize} on:dblclick={autoResize} />
+    <div class="data" bind:clientHeight={codeHeight}><JsonView json={data} /></div>
 </div>
 
 <style>
@@ -53,8 +67,8 @@
         background: #00000054;
     }
 
-    code {
-        overflow: auto;
+    div.data {
+        font-family: monospace;
         /* set css variables */
         --nodeColor: #d7d7d7;
     }
