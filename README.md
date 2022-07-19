@@ -47,10 +47,3 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-
-## TODOs
-
-- [X] Properly load and save data (indexed per day)
-- [X] allow switching days
-- [ ] order by startDate
-- [ ] implement a redo and undo function
