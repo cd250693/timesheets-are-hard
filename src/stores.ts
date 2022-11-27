@@ -1,5 +1,5 @@
-import { writable, get } from "svelte/store";
 import { browser } from '$app/env';
+import { get, writable } from "svelte/store";
 
 
 export const currentDate = writable(new Date());
@@ -16,6 +16,31 @@ function createTimeEntries() {
     // store that handles the logic for keeping track of all the delicious time entries
     const { subscribe, set, update } = writable<TimeEntry[]>([]);
 
+    /**
+     * Sorts the given list of TimeEntry by the startTime
+     * @param entries List of entries to sort
+     */
+    function sort_entries(entries: TimeEntry[]): TimeEntry[] {
+        return entries.sort((a, b) => {
+            let aTime = a.startTime.split(":", 2)
+            let bTime = b.startTime.split(":", 2)
+
+            let diff: number = Number(aTime[0]) - Number(bTime[0])
+
+            // if they are the same hour, set the diff to the minutes
+            if (diff === 0) {
+                diff = Number(aTime[1]) - Number(bTime[1])
+            }
+            return diff
+        })
+    }
+
+    /**
+     * Adds a new entry to the existing list of entries
+     * @param label the label of the entry
+     * @param startTime the time it starts
+     * @param done whether the entry is done or not
+     */
     function addEntry(label: string, startTime: string, done = false) {
         console.log("adding entry")
         update(entries => {
@@ -24,7 +49,7 @@ function createTimeEntries() {
             newId += 1;
             const newEntry = { id: newId, label, startTime, done }
             entries.push(newEntry);
-            return entries;
+            return sort_entries(entries);
         })
         save()
     }
@@ -43,7 +68,7 @@ function createTimeEntries() {
             }
 
             console.log(entries)
-            return entries
+            return sort_entries(entries)
         })
         save()
     }
@@ -119,7 +144,7 @@ function createTimeEntries() {
         addEntry,
         updateEntry,
         removeEntry,
-        resetToTestData: resetToTestData,
+        resetToTestData,
     }
 }
 
