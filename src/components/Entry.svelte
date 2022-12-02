@@ -20,7 +20,11 @@
     }
 
     function handleFocusOut(event: FocusEvent) {
-        debugger();
+        // save the form if we are no longer focusing on an element within this form
+        let form = event.currentTarget as Node;
+        if (!form.contains(event.relatedTarget as Node)) {
+            handleSave();
+        }
     }
 
     function handleDelete() {
@@ -38,7 +42,7 @@
         />
         <span class="data">
             {#if editing}
-                <form on:submit={handleSave} on:focusout={handleFocusOut}>
+                <form on:submit={handleSave} on:focusout|preventDefault={handleFocusOut}>
                     <input type="time" bind:value={entry.startTime} use:focus />
                     <input bind:value={entry.label} size="15" />
                 </form>
