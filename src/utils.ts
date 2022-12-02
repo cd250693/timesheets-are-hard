@@ -1,13 +1,11 @@
 function deepCopyArray<Type>(value: Type[]) {
-	const copy: Type[] = [];
+    const copy: Type[] = [];
 
-	value.forEach((item) => {
-		copy.push({ ...item })
-	})
+    value.forEach((item) => {
+        copy.push({ ...item });
+    });
 
-	return copy
+    return copy;
 }
 
-export {
-	deepCopyArray
-}
+export { deepCopyArray };

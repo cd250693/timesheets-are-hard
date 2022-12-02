@@ -50,7 +50,7 @@
     }
 </script>
 
-<svelte:window on:mouseup={stopResize} on:mousemove={resize} bind:innerHeight={windowHeight}/>
+<svelte:window on:mouseup={stopResize} on:mousemove={resize} bind:innerHeight={windowHeight} />
 
 <div class="debug-code" style="height: {height}px">
     <div class="resize-handle" on:mousedown={startResize} on:dblclick={autoResize} />

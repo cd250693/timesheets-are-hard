@@ -1,5 +1,4 @@
 <script lang="ts">
-
     const now = new Date();
 
     let dateString: string;
