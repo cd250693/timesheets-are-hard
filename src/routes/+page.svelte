@@ -1,7 +1,7 @@
 <script lang="ts">
-    import StateDebug from '../components/StateDebug.svelte';
     import DateInput from '../components/DateInput.svelte';
     import Entry from '../components/Entry.svelte';
+    import StateDebug from '../components/StateDebug.svelte';
     import { currentDate, timeEntries } from '../stores';
 
     function addTestEntry() {
@@ -9,7 +9,7 @@
         const randomHour = Math.round(Math.random() * 24)
             .toString()
             .padStart(2, '0');
-        const randomMinute = (Math.round(Math.random() * 4) * 15).toString().padStart(2, '0');
+        const randomMinute = (Math.round(Math.random() * 3) * 15).toString().padStart(2, '0');
         timeEntries.addEntry('Test', `${randomHour}:${randomMinute}`);
     }
 </script>
