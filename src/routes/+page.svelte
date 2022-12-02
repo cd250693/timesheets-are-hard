@@ -3,6 +3,7 @@
     import Entry from '../components/Entry.svelte';
     import StateDebug from '../components/StateDebug.svelte';
     import { currentDate, timeEntries } from '../stores';
+    import { getRandomWords } from '../utils';
 
     function addTestEntry() {
         // get a random time in 24 hour time, but only by 15 min increments
@@ -10,7 +11,8 @@
             .toString()
             .padStart(2, '0');
         const randomMinute = (Math.round(Math.random() * 3) * 15).toString().padStart(2, '0');
-        timeEntries.addEntry('Test', `${randomHour}:${randomMinute}`);
+        const words = getRandomWords(Math.random() * 6);
+        timeEntries.addEntry('#' + words.join(' '), `${randomHour}:${randomMinute}`);
     }
 </script>
 
@@ -21,9 +23,11 @@
     <button on:click={addTestEntry}>Add test entry</button>
 </div>
 <section>
+    Start: <input type="time" value="09:00" />
     {#each $timeEntries as entry (entry.id)}
         <Entry {entry} />
     {/each}
+    End: <input type="time" value="17:00" />
 </section>
 
 <StateDebug data={$timeEntries} />
@@ -31,9 +35,8 @@
 <style>
     :global(div.container) {
         display: flex;
-        width: fit-content;
-        margin: auto;
         flex-direction: column;
+        align-items: center;
     }
     /* global styling */
     :global(html) {
@@ -44,6 +47,11 @@
         background: #fff;
         font: 100% system-ui;
         margin: 0 10%;
+    }
+
+    h1 {
+        color: rgb(246, 200, 96);
+        text-shadow: 0px 2px 3px #555;
     }
 
     @media (prefers-color-scheme: dark) {
