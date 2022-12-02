@@ -15,15 +15,15 @@
     }
 
     function handleSave() {
-        timeEntries.updateEntry(entry.id, { label: entry.label, startTime: entry.startTime });
+        timeEntries.updateEntry(entry.id, { text: entry.text, startTime: entry.startTime });
         editing = false;
     }
 
     function handleFocusOut(event: FocusEvent) {
         // save the form if we are no longer focusing on an element within this form
-        let form = event.currentTarget as Node;
-        if (!form.contains(event.relatedTarget as Node)) {
-            handleSave();
+        const form = document.forms.namedItem(`entry-${entry.id}`);
+        if (form && !form.contains(event.relatedTarget as Node)) {
+            form.requestSubmit();
         }
     }
 
@@ -42,21 +42,23 @@
         />
         <span class="data">
             {#if editing}
-                <form on:submit={handleSave} on:focusout|preventDefault={handleFocusOut}>
-                    <input type="time" bind:value={entry.startTime} use:focus />
-                    <input bind:value={entry.label} size="15" />
+                <form
+                    name="entry-{entry.id}"
+                    on:submit|preventDefault={handleSave}
+                    on:focusout|preventDefault={handleFocusOut}
+                >
+                    <input required type="time" step="900" bind:value={entry.startTime} use:focus />
+                    <input required bind:value={entry.text} size="15" />
                 </form>
             {:else}
-                <span on:dblclick={startEdit}>{entry.startTime} - {entry.label}</span>
+                <span on:click={startEdit}
+                    >{entry.startTime} - <span class="tag">{entry.tag || ''}</span>
+                    {entry.label}</span
+                >
             {/if}
         </span>
     </span>
     <span>
-        {#if editing}
-            <span class="icon" on:click={handleSave}><Svg type="save" /></span>
-        {:else}
-            <span class="icon" on:click={startEdit}><Svg type="edit" /></span>
-        {/if}
         <span class="icon" on:click={handleDelete}><Svg type="close" /></span>
     </span>
 </div>
@@ -67,9 +69,13 @@
         max-width: 500px;
         justify-content: space-between;
         padding-top: 5px;
+        transition: background 0.1s;
     }
     div.row:hover {
         background: rgba(0, 0, 0, 0.25);
+    }
+    div.row:hover span.icon {
+        opacity: 1;
     }
     form {
         display: inline-flex;
@@ -78,11 +84,16 @@
         position: relative;
         display: inline-block;
         box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.1s;
     }
     .data input {
         width: fit-content;
     }
     .data input[type='time'] {
         margin-right: 5px;
+    }
+    .tag {
+        color: rgb(246, 251, 56);
     }
 </style>
