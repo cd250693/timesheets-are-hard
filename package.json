@@ -14,7 +14,7 @@
     "devDependencies": {
         "@sveltejs/adapter-auto": "next",
         "@sveltejs/kit": "next",
-        "@typescript-eslint/eslint-plugin": "^5.47.1",
+        "@typescript-eslint/eslint-plugin": "^5.50.0",
         "@typescript-eslint/parser": "^5.47.1",
         "@zerodevx/svelte-json-view": "^0.2.2",
         "eslint": "^8.28.0",
