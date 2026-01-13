@@ -16,7 +16,7 @@
         "@sveltejs/kit": "next",
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.57.0",
-        "@zerodevx/svelte-json-view": "^0.2.2",
+        "@zerodevx/svelte-json-view": "^1.0.11",
         "eslint": "^8.28.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-svelte3": "^4.0.0",
